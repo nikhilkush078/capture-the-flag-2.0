@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curved Square Boxes Below Image</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+   <header class="header">
+    <div class="header-container">
+        <h1>Website Header</h1>
+        <div>
+            <button id="userButton">User</button>
+            <button id="flagButton">Flag</button>
+        </div>
+        <div id="userInputBox" class="input-box">
+            <input type="text" id="userName" placeholder="Enter your name">
+            <button id="submitName">Submit</button>
+        </div>
+        <div id="flagInputBox" class="input-box">
+            <input type="text" id="flagInput" placeholder="Enter your flag">
+            <button id="submitFlag">Submit</button>
+        </div>
+    </div>
+</header>
+
+
+    <div class="container">
+        <div class="image-container">
+            <img src="welcome.png" alt="Your Image">
+        </div>
+           <div class="boxes-container">
+    <a href="https://example.com/link1" class="box hover-effect">
+        <img src="image1.png" alt="Image 1">
+    </a>
+    <a href="https://example.com/link2" class="box hover-effect">
+        <img src="image2.png" alt="Image 2">
+    </a>
+    <a href="https://example.com/link3" class="box hover-effect">
+        <img src="image3.png" alt="Image 3">
+    </a>
+    <a href="https://example.com/link4" class="box hover-effect">
+        <img src="image4.png" alt="Image 4">
+    </a>
+    <a href="https://example.com/link5" class="box hover-effect">
+        <img src="image5.png" alt="Image 5">
+    </a>
+</div>
+
+
+
+    <script>
+             const userButton = document.getElementById('userButton');
+const flagButton = document.getElementById('flagButton');
+const userInputBox = document.getElementById('userInputBox');
+const flagInputBox = document.getElementById('flagInputBox');
+const submitName = document.getElementById('submitName');
+const submitFlag = document.getElementById('submitFlag');
+const userNameInput = document.getElementById('userName');
+const flagInput = document.getElementById('flagInput');
+
+// Show user input box on userButton click
+userButton.addEventListener('click', function(event) {
+    event.stopPropagation(); // Prevent document click from triggering immediately
+    userInputBox.style.display = 'block';
+});
+
+// Show flag input box on flagButton click
+flagButton.addEventListener('click', function(event) {
+    event.stopPropagation(); // Prevent document click from triggering immediately
+    flagInputBox.style.display = 'block';
+});
+
+// Handle click outside to hide input boxes
+document.addEventListener('click', function(event) {
+    // Check if clicked element is not within user or flag input boxes
+    if (!userInputBox.contains(event.target) && !flagInputBox.contains(event.target)) {
+        userInputBox.style.display = 'none';
+        flagInputBox.style.display = 'none';
+    }
+});
+
+// Submit user name
+submitName.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+    const userName = userNameInput.value.trim();
+    if (userName !== '') {
+        sessionStorage.setItem('userName', userName);
+        alert(`Hello, ${userName}!`);
+        userInputBox.style.display = 'none';
+    } else {
+        alert('Please enter your name!');
+    }
+});
+
+// Submit flag
+submitFlag.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+    const userName = sessionStorage.getItem('userName');
+    const flagValue = flagInput.value.trim();
+    if (userName && flagValue !== '') {
+        const fileContent = `Name: ${userName}\nFlag: ${flagValue}`;
+        const blob = new Blob([fileContent], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'flag.txt';
+        a.click();
+        
+        flagInput.value = '';
+        flagInputBox.style.display = 'none';
+    } else {
+        alert('Please enter your name and flag!');
+    }
+});
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMD-like Interface</title>
+<style>
+    body {
+        background-color: #1e1e1e;
+        color: #00ff00;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    .prompt {
+        margin-bottom: 10px;
+    }
+    
+    .prompt::before {
+        content: "> ";
+    }
+    
+    .output {
+        color: white;
+        margin-top: 10px;
+    }
+
+    .error {
+        color: red;
+    }
+
+    input[type="text"] {
+        background-color: #333;
+        border: none;
+        color: #00ff00;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 16px;
+        padding: 5px 10px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
+</head>
+<body>
+    <div class="prompt">=============================</div>
+    <div class="prompt">WELLCOME TO CAPTURE THE FLAG</div>
+	<div class="prompt">=============================</div>
+	<div class="prompt">COMMAND PROMPT</div>
+	<div class="prompt">Hint: dir, cd, type</div>
+    <input type="text" id="cmdInput" autofocus autocomplete="off">
+
+    <div class="output">Type your commands here...</div>
+
+    <script>
+        // Sample directories and files
+        let currentDirectory = "";
+        const directories = [
+            "documents", "downloads", "pictures", "videos", "music", 
+            "projects", "username_and_password"
+        ];
+
+        const files = {
+            "username_and_password.txt": "username - ebeionm\npassword - lobkenop\n"
+        };
+
+        // Get input element
+        const cmdInput = document.getElementById('cmdInput');
+
+        // Handle user input
+        cmdInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const command = cmdInput.value.trim();
+                handleCommand(command);
+                cmdInput.value = ""; // Clear input field after handling command
+            }
+        });
+
+        // Handle user commands
+        function handleCommand(command) {
+            if (command === "dir") {
+                showDirectories();
+            } else if (command.startsWith("cd ")) {
+                changeDirectory(command.substring(3));
+            } else if (command === "type username_and_password.txt") {
+                showUsernameAndPassword();
+            } else {
+                outputText(`<span class="error">Command not recognized: ${command}</span>`);
+            }
+        }
+
+        // Show directory listing
+        function showDirectories() {
+            if (currentDirectory === "username_and_password") {
+                outputText("username_and_password.txt");
+            } else {
+                const dirs = directories.slice(); // Copy array to avoid modifying original
+                dirs.sort(() => Math.random() - 0.5); // Randomize order
+                outputText(dirs.join("<br>"));
+            }
+        }
+
+        // Change directory
+        function changeDirectory(dirName) {
+            if (directories.includes(dirName)) {
+                outputText(`Changed directory to ${dirName}`);
+                currentDirectory = dirName;
+            } else {
+                outputText(`<span class="error">Directory not found: ${dirName}</span>`);
+            }
+        }
+
+        // Show username and password prompt
+        function showUsernameAndPassword() {
+            const password = prompt("Please enter your password:");
+            if (password === "kepler") {
+                outputText("username - ebeionm<br>password - lobkenop<br>SECOND FLAG : SHERU")
+				
+            } else {
+                outputText(`<span class="error">Incorrect password.</span>`);
+            }
+        }
+
+        // Helper function to output text to the interface
+        function outputText(text) {
+            const outputDiv = document.querySelector('.output');
+            outputDiv.innerHTML = text;
+        }
+    </script>
+<div style="position: absolute; bottom: 10px; right: 10px; color: white; font-size: 12px; text-align: right;">
+    Hint: password inside the source code<br>please inspect the website 
+</body>
+</html>

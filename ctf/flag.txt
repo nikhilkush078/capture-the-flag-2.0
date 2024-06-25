@@ -1,0 +1,21 @@
+======================================= IMPOTANT FILE ========================================
+import base64
+
+def get_credentials():
+    # Base64 encoded username and password
+    encoded_username = b'cmExY29uYjY='  
+    encoded_password = b'ZHlob3JuZWcx'     
+    # Decode from base64
+    username = base64.b64decode(encoded_username).decode('utf-8')
+    password = base64.b64decode(encoded_password).decode('utf-8')
+    
+    return username, password
+
+if __name__ == "__main__"
+    username, password = get_credentials()
+    print("Username:", username)
+    print("Password:", password)
+#scrambled username and password related to the chemistry 
+# unscramble the password using chemistry 
+=================================================================================================
+*************************************************************************************************
